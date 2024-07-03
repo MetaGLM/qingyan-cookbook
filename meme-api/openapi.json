@@ -1,0 +1,68 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "个人项目",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [],
+  "paths": {
+    "/meme/generate_meme": {
+      "post": {
+        "operationId": "generateMeme",
+        "summary": "生成MEME图像",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "query"
+                ],
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "title": "用户输入内容",
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "query": "程序员"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "*/*": {
+                "schema": { "type": "object", "properties": {} },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": ""
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {},
+    "securitySchemes": {}
+  },
+  "servers": [
+    {
+      "url": "https://meme-api.vinlic.com"
+    }
+  ]
+}

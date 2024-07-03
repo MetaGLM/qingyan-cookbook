@@ -1,0 +1,169 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>MEME模板</title>
+    <style>
+        body {
+            width: 100%;
+            height: 960px;
+            margin: 0;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            font-family: "Microsoft YaHei";
+        }
+
+        #container {
+            width: 1280px;
+            height: 960px;
+            overflow: hidden;
+        }
+
+        .layer {
+            width: 1280px;
+            height: 960px;
+            position: absolute;
+        }
+
+        #image {
+            width: 480px;
+            height: 480px;
+            margin: 480px auto 0 auto;
+            overflow: hidden;
+        }
+
+        #image canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        #title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 46px;
+        }
+
+        .text-container {
+            margin-bottom: 40px;
+            justify-content: space-around;
+            display: flex;
+            font-size: 28px;
+        }
+
+        .text-container>div {
+            text-align: center;
+            flex: 1;
+        }
+
+        .text-container>div>p:first-child {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div class="layer">
+            <div id="image">
+                <canvas id="canvas" width="480" height="480"></canvas>
+            </div>
+        </div>
+        <div class="layer">
+            <h1 id="title">「 {{title}} 」</h1>
+            <div class="text-container">
+                <div>
+                    <p>“{{text0}}”</p>
+                    <p>-- {{reply0}}</p>
+                </div>
+                <div>
+                    <p>“{{text1}}”</p>
+                    <p>-- {{reply1}}</p>
+                </div>
+                <div>
+                    <p>“{{text2}}”</p>
+                    <p>-- {{reply2}}</p>
+                </div>
+            </div>
+            <div class="text-container">
+                <div>
+                    <p>“{{text3}}”</p>
+                    <p>-- {{reply3}}</p>
+                </div>
+                <div>
+                    <p>“{{text4}}”</p>
+                    <p>-- {{reply4}}</p>
+                </div>
+                <div>
+                    <p>“{{text5}}”</p>
+                    <p>-- {{reply5}}</p>
+                </div>
+            </div>
+            <div class="text-container">
+                <div>
+                    <p>“{{text6}}”</p>
+                    <p>-- {{reply6}}</p>
+                </div>
+                <div></div>
+                <div>
+                    <p>“{{text7}}”</p>
+                    <p>-- {{reply7}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const image = new Image();
+        image.src = '{{image_url}}';
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+
+        function thresholdFilter(canvas, ctx, threshold) {
+            // 获取图像数据
+            var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            var data = imageData.data;
+
+            // 遍历所有像素
+            for (var i = 0; i < data.length; i += 4) {
+                // 计算像素的平均亮度
+                var avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+                // 应用阈值
+                var val = avg >= threshold ? 255 : 0;
+                // 更新像素数据
+                data[i] = val;     // 红色
+                data[i + 1] = val; // 绿色
+                data[i + 2] = val; // 蓝色
+                // alpha通道保持不变
+            }
+
+            // 将修改后的像素数据放回Canvas
+            ctx.putImageData(imageData, 0, 0);
+        }
+
+        function drawWhiteRectangle(canvas, ctx, x, y, width, height) {
+            // 获取图像数据
+            var imageData = ctx.getImageData(x, y, width, height);
+            var data = imageData.data;
+
+            // 遍历矩形区域内的所有像素
+            for (var i = 0; i < data.length; i += 4) {
+                // 设置RGB值为白色
+                data[i] = 255;     // 红色
+                data[i + 1] = 255; // 绿色
+                data[i + 2] = 255; // 蓝色
+                // alpha通道保持不变
+            }
+
+            // 将修改后的像素数据放回Canvas
+            ctx.putImageData(imageData, x, y);
+        }
+
+        image.onload = () => {
+            ctx.drawImage(image, 0, 0, 1280, 1280, 0, 0, 600, 600);
+            thresholdFilter(canvas, ctx, 90);
+            drawWhiteRectangle(canvas, ctx, 373, 441, 97, 28);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,8 @@
+dist/
+node_modules/
+logs/
+.bin/
+.vercel
+forward-port-proxy.sh
+*.pem
+*.zip

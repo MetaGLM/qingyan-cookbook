@@ -1,0 +1,6 @@
+dist/
+node_modules/
+logs/
+.vercel
+forward-port-proxy.sh
+*.pem
