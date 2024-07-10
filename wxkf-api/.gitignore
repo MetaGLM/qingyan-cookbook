@@ -1,0 +1,10 @@
+dist/
+node_modules/
+logs/
+tmp/
+.vercel
+forward-port-proxy.sh
+*.pem
+wxkf-api.tar.gz
+secret.yml
+agents.yml
