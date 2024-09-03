@@ -31,7 +31,7 @@ async function generateAssistantReply(messages: ICompletionMessage[], userId: st
     const latestConvId = getUserLatestConvId(userId, openKfId, agentConfig.maxRounds);
     const result = await API_MAP[agentConfig.api].createCompletion(agentConfig.id, messages, _.sample(apiKeys), latestConvId);
     setUserLatestConvId(result.id, userId, openKfId);
-    const reply = result.choices[0].message.content;
+    const reply = result.choices[0].message.content || '';
     addMessageToUserMessageList({
         msgtype: 'text',
         msgid: '',
@@ -182,8 +182,9 @@ async function handleTextMessage(text: IMessage['text'], userId: string, openKfI
         });
     }
     clearUserMediaList(userId, openKfId);
+    logger.info(`[User] ${messages[messages.length - 1].content}`);
     const reply = await generateAssistantReply(messages, userId, openKfId);
-    console.log(reply);
+    logger.info(`[Assistant] ${reply}`);
     const imageUrls = [];
     const urlPattern = /\((https?:\/\/\S+)\)/g;
     let match;
